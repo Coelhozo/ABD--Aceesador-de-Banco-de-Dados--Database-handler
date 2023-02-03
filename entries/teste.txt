@@ -1,0 +1,4 @@
+Usuario: pedro
+Senha: Simburbia
+Host: localhost
+Banco: suap

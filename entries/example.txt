@@ -1,0 +1,6 @@
+<entry nome="">
+    Usuário: "",
+    Senha: "",
+    Host: "",
+    Banco: ""
+</entry>
