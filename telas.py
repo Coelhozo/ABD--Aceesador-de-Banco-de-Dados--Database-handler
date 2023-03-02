@@ -1,10 +1,8 @@
 import PySimpleGUI as sg
 import telaInicial as telaInc
 
-sg.theme("DarkAmber")
-
 def openWindow(nome, layout):
-    c=0
+    
     janela = sg.Window(nome, layout, element_justification='c')
 
     while True:
@@ -23,7 +21,8 @@ def openWindow(nome, layout):
     
     janela.close()
 
-def createWindow(window, origem=""):
+def createWindow(window, origem="", theme = "DarkAmber"):
+    sg.theme(theme)
     #layout da tela inicial
     if (window == 1):
         layout_coluna_input = [

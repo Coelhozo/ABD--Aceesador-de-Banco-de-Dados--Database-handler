@@ -64,12 +64,10 @@ def runCheck(values):
 
 def saveEntry(values, nome):
     filename = "Entries/"+nome["nome"]+".txt"
-    file = open(filename, "a")
-    file.write(
+    with open(filename, "a") as file:
+        file.write(
 f"""Usuario: {values["Usuário"]}
 Senha: {values["Senha"]}
 Host: {values["Host"]}
 Banco: {values["Banco"]}"""
     )
-
-    file.close()
