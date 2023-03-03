@@ -1,8 +1,9 @@
 import PySimpleGUI as sg
 import telaInicial as telaInc
 
+
 def openWindow(nome, layout):
-    
+
     janela = sg.Window(nome, layout, element_justification='c')
 
     while True:
@@ -10,20 +11,21 @@ def openWindow(nome, layout):
         if evento == "telaInc" or evento == "regBD":
             erro = telaInc.telaInicial(valores, evento)
             if erro:
-                janela.Element("-TITLE-").update(erro, text_color = "Red")
+                janela.Element("-TITLE-").update(erro, text_color="Red")
             else:
                 break
-        elif evento=="regNome":
+        elif evento == "regNome":
             janela.close()
             return valores
         else:
             break
-    
+
     janela.close()
 
-def createWindow(window, origem="", theme = "DarkAmber"):
+
+def createWindow(window, origem="", theme="DarkAmber"):
     sg.theme(theme)
-    #layout da tela inicial
+    # layout da tela inicial
     if (window == 1):
         layout_coluna_input = [
             [sg.InputText(key="Host")],
@@ -34,7 +36,7 @@ def createWindow(window, origem="", theme = "DarkAmber"):
 
         layout_coluna_text = [
             [sg.Text("Host: ")],
-            [sg.Text("Usuário: ")], 
+            [sg.Text("Usuário: ")],
             [sg.Text("Senha: ")],
             [sg.Text("Banco de Dados: ")]
         ]
@@ -45,12 +47,14 @@ def createWindow(window, origem="", theme = "DarkAmber"):
 
         layout = [
             [sg.Text("Bem-Vindo!", key="-TITLE-")],
-            [sg.Column(layout_coluna_text, vertical_alignment="left", justification="left"), sg.Column(layout_coluna_input, vertical_alignment="right", justification="right")],
-            [sg.Button("Salvar", key = "regBD"), sg.Button("Pronto", key = "telaInc")]
+            [sg.Column(layout_coluna_text, vertical_alignment="left", justification="left"), sg.Column(
+                layout_coluna_input, vertical_alignment="right", justification="right")],
+            [sg.Button("Salvar", key="regBD"),
+             sg.Button("Pronto", key="telaInc")]
         ]
 
         nome = "Acessador de Banco de Dados"
-    if(window == 2):
+    if (window == 2):
         if origem == "save":
             layout = [
                 [sg.T("Defina um nome para salvar este endereço de acesso.")],
@@ -58,8 +62,8 @@ def createWindow(window, origem="", theme = "DarkAmber"):
                 [sg.Button("Pronto", key="regNome")]
             ]
 
-            nome="Nome do Registro"
+            nome = "Nome do Registro"
 
     values = openWindow(nome, layout)
     if values:
-        return values       
+        return values
