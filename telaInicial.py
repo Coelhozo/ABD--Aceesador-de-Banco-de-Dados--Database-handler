@@ -1,8 +1,8 @@
-import telas
+import requestTela
 def telaInicial(values, evento):
     if runCheck(values):
         if evento == "regBD":
-            nome = telas.createWindow(2, "save")
+            nome = requestTela.request(2, "save")
             saveEntry(values, nome)
     else:
         #constroi a menssagem de erro

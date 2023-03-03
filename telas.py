@@ -11,7 +11,7 @@ def openWindow(nome, layout):
             erro = telaInc.telaInicial(valores, evento)
             if erro:
                 janela.Element("-TITLE-").update(erro, text_color = "Red")
-            if evento=="telaInc":
+            else:
                 break
         elif evento=="regNome":
             janela.close()
