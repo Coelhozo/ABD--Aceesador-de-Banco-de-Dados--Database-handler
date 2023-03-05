@@ -1,6 +1,5 @@
 import PySimpleGUI as sg
-import telaInicial as telaInc
-
+import telas.telaInicial as telaInc
 
 def openWindow(nome, layout):
 
@@ -67,3 +66,6 @@ def createWindow(window, origem="", theme="DarkAmber"):
     values = openWindow(nome, layout)
     if values:
         return values
+
+if __name__ == "__main__":
+    createWindow(1)

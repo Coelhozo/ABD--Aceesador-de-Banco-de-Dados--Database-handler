@@ -1,3 +1,5 @@
 /anotações
 /__pycache__
-/entries
+/entries/*
+/app.spec
+/extra.py

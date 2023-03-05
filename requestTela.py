@@ -1,4 +1,4 @@
-import telas
+import app
 
 def request(tela, origem=""):
-    return telas.createWindow(tela, origem)
+    return app.createWindow(tela, origem)
