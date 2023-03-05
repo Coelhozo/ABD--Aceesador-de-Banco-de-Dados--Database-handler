@@ -1,4 +1,4 @@
-import requestTela
+import telas.requestTela as requestTela
 
 def telaInicial(values, evento):
     if runCheck(values):
