@@ -1,6 +1,5 @@
 import requestTela
 
-
 def telaInicial(values, evento):
     if runCheck(values):
         if evento == "regBD":

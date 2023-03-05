@@ -1,5 +1,5 @@
 import PySimpleGUI as sg
-import telas.telaInicial as telaInc
+from telas import telaInicial as telaIni
 
 def openWindow(nome, layout):
 
@@ -8,7 +8,7 @@ def openWindow(nome, layout):
     while True:
         evento, valores = janela.read()
         if evento == "telaInc" or evento == "regBD":
-            erro = telaInc.telaInicial(valores, evento)
+            erro = telaIni.telaInicial(valores, evento)
             if erro:
                 janela.Element("-TITLE-").update(erro, text_color="Red")
             else:
