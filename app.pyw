@@ -7,7 +7,7 @@ def openWindow(nome, layout):
 
     while True:
         evento, valores = janela.read()
-        if evento == "telaInc" or evento == "regBD":
+        if evento == "telaInc" or evento == "regBD" or evento == "telaIncReg":
             erro = telaIni.telaInicial(valores, evento)
             if erro:
                 janela.Element("-TITLE-").update(erro, text_color="Red")
@@ -41,15 +41,18 @@ def createWindow(window, origem="", theme="DarkAmber"):
         ]
 
         layout_frame_registros = [
-            [sg.T("Acessos Salvos")]
+            [sg.Listbox(values=["pedro1", "pedro2", "pedro3", "pedro4", "pedro5"], size=(30,6), key="RegEnter")],
+            [sg.Button("Pronto", key="telaIncReg")]
+        ]
+
+        layout_frame_inserir= [
+            [sg.Column(layout_coluna_text, vertical_alignment="left", justification="left"), sg.Column(layout_coluna_input, vertical_alignment="right", justification="right")],
+            [sg.Button("Salvar", key="regBD"), sg.Button("Pronto", key="telaInc")]
         ]
 
         layout = [
             [sg.Text("Bem-Vindo!", key="-TITLE-")],
-            [sg.Column(layout_coluna_text, vertical_alignment="left", justification="left"), sg.Column(
-                layout_coluna_input, vertical_alignment="right", justification="right")],
-            [sg.Button("Salvar", key="regBD"),
-             sg.Button("Pronto", key="telaInc")]
+            [sg.Frame(" Inserir ", layout_frame_inserir, element_justification="center", title_color="white", border_width="1px"), sg.Frame(" Registros ", layout_frame_registros, element_justification="center", title_color="white", border_width="1px")]
         ]
 
         nome = "Acessador de Banco de Dados"
