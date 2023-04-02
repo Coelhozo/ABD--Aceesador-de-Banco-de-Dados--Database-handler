@@ -2,3 +2,4 @@
 /__pycache__
 /entries/*
 /app.spec
+/test.py
