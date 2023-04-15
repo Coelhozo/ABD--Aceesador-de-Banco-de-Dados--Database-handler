@@ -1,9 +1,9 @@
-import main
+from telas import createWindow as cw
 
-def request(tela, origem="", itens = None):
-    if tela == 2:
+def request(tela, itens = None, tema = "DarkAmber"):
+    if 'C' in tela:
         tema = "DarkBlue"
     
-    if tela == 0:
+    if tela == '-ERR-':
         tema = "DarkRed2"
-    return main.createWindow(tela, origem, theme = tema, itensExibicao = itens)
+    return cw.createWindow(tela, theme = tema, itensExibicao = itens)
