@@ -2,11 +2,12 @@ import PySimpleGUI as sg
 import re
 from telas import telaInicial as telaIni
 from telas import createWindow as cw
+from telas import requestTela
 
 def openWindow(nome, layout):
 
     janela = sg.Window(nome, layout, element_justification='c')
-    erro = None
+    argsMissing = None
 
     #expressões regulares para os tipos gerais de eventos
     isTelaInicial = re.compile(r'-TIF[0-9]{2}\w{2}-')
@@ -23,10 +24,15 @@ def openWindow(nome, layout):
         telaInicial = isTelaInicial.match(event)
 
         if telaInicial:
-            erro = telaIni.telaInicial(values, event)
-            if erro:
-                janela.Element('-TITLE-').update(erro, text_color='Red')
-        if isOK.match(event) and not erro:
+            try:
+                argsMissing = telaIni.telaInicial(values, event)
+                if argsMissing:
+                    janela.Element('-TITLE-').update(argsMissing, text_color='Red')
+            except FileNotFoundError:
+                requestTela.request('-ERR-', itens=f"Verifique se entries/index.txt e entries/data/{values['-REGISTRO-'][0]}.txt não foram apagados")
+            except FileExistsError:
+                requestTela.request('-ERR-', itens=f"O arquivo com o nome {values['-REGISTRO-'][0]} já existe, não crie arquivos manualmente, insira o nome do registro no index")
+        if isOK.match(event) and not argsMissing:
             break
         if returnsData.match(event):
             janela.close()

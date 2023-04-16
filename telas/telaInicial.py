@@ -34,7 +34,7 @@ def telaInicial(values, event):
                 #remove todo o diretório
                 rmtree(path=entriesPATH+i.pop(i.index(nome)))
                 index = "\n".join(i)
-                writeIndex(index, action='w', flag=1)
+                writeIndex(index, action='w')
 
             elif operation.group(2) == 'UP':
                 data = requestTela.request('-TIF02CUP-')
@@ -113,13 +113,11 @@ def getEntry(nome):
         oldRecords[item[0]] = item[1]
     return oldRecords
 
-def writeIndex(nome='', action = 'a', flag = 0):
+def writeIndex(nome='', action = 'a'):
     filename = indexPATH
-    
     #insere o seprador caso haja algum indice no index.txt
-    if nome:
-        nome+='\n'
-    
+    if nome: nome+='\n'
+        
     with open(filename, action) as file:            
         file.write(nome)
 
