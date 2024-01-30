@@ -23,8 +23,6 @@ def telaInicial(values, event):
                         requestTela.request('-ERR-', itens="Esse nome já consta nos registros.")
                 if nome:
                     saveEntry(values, nome['nome'])
-            else:
-                print(values)
         else:
             #events do frame 02 -registros-
             nome = values['-REGISTRO-'][0]
@@ -68,7 +66,6 @@ def telaInicial(values, event):
     else:
         return errorMessage(values, event)
 
-
 def runCheck(values, event):
     if re.match(r'-TIF01.*-', event):
         # confere se os campos foram preenchidos
@@ -84,7 +81,6 @@ def runCheck(values, event):
             return False
         else:
             return True
-
 
 def saveEntry(values, nome, update = False):
     if not update:
@@ -182,3 +178,12 @@ def errorMessage(values = '', event = ''):
             erro += " tem que ser preenchido"
             break
     return erro
+
+def trimValues(bdValues, event):
+    if "F01" in event:
+        bdValues.pop('-REGISTRO-')
+
+    if "F02" in event:
+        bdValues = getEntry(bdValues['-REGISTRO-'][0])
+
+    return bdValues

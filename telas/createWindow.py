@@ -2,7 +2,7 @@ import main
 import PySimpleGUI as sg
 from telas import telaInicial as telaIni
 
-def createWindow(window, theme='DarkAmber', itensExibicao = None):
+def createWindow(window, theme='DarkAmber', itensExibicao = None, text = None):
     sg.theme(theme)
 
     if window == '-ERR-':
@@ -102,6 +102,16 @@ def createWindow(window, theme='DarkAmber', itensExibicao = None):
 
         nome = "Visualizar Registro"
 
+    #Layout da tela de visualização de bancos de dados do servidor
+    if window == '-BL-':
+        layout = [
+            [sg.T("Lista de Banco de dados no servidor", key='-TITLE-')],
+            [sg.Listbox(values=[1,2,3,4], size=(34,6), key='-BD-')],
+            [sg.Button('Pronto', key='-BLF01OK-')]
+        ]
+
+        nome = f"Host: {text}"
+    
     values = main.openWindow(nome, layout)
     if values:
         return values
