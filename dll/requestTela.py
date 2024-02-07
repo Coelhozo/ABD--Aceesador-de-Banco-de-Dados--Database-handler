@@ -1,4 +1,4 @@
-from telas import createWindow as cw
+from dll import createWindow as cw
 
 def request(tela, itens = None, tema = "DarkAmber"):
     if 'C' in tela:

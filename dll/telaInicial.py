@@ -1,7 +1,8 @@
-import telas.requestTela as requestTela
+import dll.requestTela as requestTela
 from shutil import rmtree
 import re
 import os
+import dll.utilidades as utils
 
 #variáveis de escopo global para o módulo
 entriesPATH = "entries/data/"
@@ -51,7 +52,7 @@ def telaInicial(values, event):
                         nome = data['Nome']
                         
                     data.pop('Nome')
-                    oldRecord = getEntry(nome)
+                    oldRecord = utils.getEntry(nome)
                     newRecord = {}
                     for col in data:
                         if data[col]:
@@ -61,7 +62,7 @@ def telaInicial(values, event):
                     saveEntry(newRecord, nome, update = True)
 
             elif operation.group(2) == 'SW':
-                entryInfo = getEntry(nome)
+                entryInfo = utils.getEntry(nome)
                 requestTela.request('-TIF02CSW-', entryInfo)
     else:
         return errorMessage(values, event)
@@ -96,18 +97,6 @@ Senha: {values['Senha']}
 Host: {values['Host']}
 Banco: {values['Banco']}"""
         )
-
-def getEntry(nome):
-    filename = entriesPATH+f"{nome}/{nome}.txt"
-    with open(filename, 'r') as entry:
-        i = entry.read()
-    data = i.split('\n')
-    valores = [item.split(': ') for item in data]
-    
-    oldRecords = {}
-    for item in valores:
-        oldRecords[item[0]] = item[1]
-    return oldRecords
 
 def writeIndex(nome='', action = 'a'):
     filename = indexPATH
@@ -184,6 +173,6 @@ def trimValues(bdValues, event):
         bdValues.pop('-REGISTRO-')
 
     if "F02" in event:
-        bdValues = getEntry(bdValues['-REGISTRO-'][0])
+        bdValues = utils.getEntry(bdValues['-REGISTRO-'][0])
 
     return bdValues

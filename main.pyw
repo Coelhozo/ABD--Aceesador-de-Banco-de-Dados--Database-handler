@@ -1,10 +1,12 @@
 import PySimpleGUI as sg
 import re
 
-from telas import telaInicial as telaIni
-from telas import createWindow as cw
-from telas import requestTela
-from telas import BDList as bl
+from dll import telaInicial as telaIni
+from dll import createWindow as cw
+from dll import requestTela
+from dll import BDList as bl
+
+from dll import connectorDB as con
 
 def openWindow(nome, layout):
 
@@ -31,15 +33,20 @@ def openWindow(nome, layout):
         #verificação de telas
         if isTelaInicial.match(event):
             try:
+
                 argsMissing = telaIni.telaInicial(values, event)
                 if argsMissing:
                     janela.Element('-TITLE-').update(argsMissing, text_color='Red')
             except FileNotFoundError:
+
                 requestTela.request('-ERR-', itens=f"Verifique se entries/index.txt e entries/data/{values['-REGISTRO-'][0]}.txt não foram apagados")
             except FileExistsError:
+
                 requestTela.request('-ERR-', itens=f"O arquivo com o nome {values['-REGISTRO-'][0]} já existe, não crie arquivos manualmente, insira o nome do registro no index")
             if isOK.match(event) and not argsMissing:
+
                 bdValues = telaIni.trimValues(values, event)
+                con.writeDBVariables(bdValues)
                 break
 
         if isTelaBL.match(event):
@@ -66,4 +73,19 @@ def openWindow(nome, layout):
 
 if __name__ == '__main__':
 
-    cw.createWindow('-TI-')
+    #cw.createWindow('-TI-')
+    import mysql.connector as ms
+    from dll import utilidades as utils
+
+    dbValues = utils.getEntry()
+    with ms.connect(
+        host=dbValues['Host'],
+        user=dbValues['Usuario'],
+        password=dbValues['Senha'] if dbValues['Senha'] != "''" else '',
+        database = dbValues['Banco'] if dbValues['Banco'] else None
+    ) as con:
+        cursor = con.cursor()
+        cursor.execute("SHOW DATABASES")
+        for x in cursor:
+            print(x)
+        
