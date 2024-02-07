@@ -1,5 +1,5 @@
 import mysql.connector as ms
-import utilidades as utils
+from dll import utilidades as utils
 
 def executarQuery(query):
     dbValues = getDBVariables()

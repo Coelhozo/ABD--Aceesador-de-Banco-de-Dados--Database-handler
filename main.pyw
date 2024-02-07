@@ -73,19 +73,5 @@ def openWindow(nome, layout):
 
 if __name__ == '__main__':
 
-    #cw.createWindow('-TI-')
-    import mysql.connector as ms
-    from dll import utilidades as utils
-
-    dbValues = utils.getEntry()
-    with ms.connect(
-        host=dbValues['Host'],
-        user=dbValues['Usuario'],
-        password=dbValues['Senha'] if dbValues['Senha'] != "''" else '',
-        database = dbValues['Banco'] if dbValues['Banco'] else None
-    ) as con:
-        cursor = con.cursor()
-        cursor.execute("SHOW DATABASES")
-        for x in cursor:
-            print(x)
+    cw.createWindow('-TI-')
         

@@ -1,4 +1,4 @@
-import connectorDB as con
+from dll import connectorDB as con
 
 def BDList(values):
     if not values['-BD-']:
@@ -6,6 +6,7 @@ def BDList(values):
     
 def getList():
     data = con.executarQuery("SHOW DATABASES;")
-    print(data)
-
-getList()
+    bancos = []
+    for banco in data:
+        bancos.append(banco[0])
+    return(bancos)

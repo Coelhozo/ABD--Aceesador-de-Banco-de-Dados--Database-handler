@@ -108,7 +108,7 @@ def createWindow(window, theme='DarkAmber', itensExibicao = None, text = None):
         list = bl.getList();
         layout = [
             [sg.T("Lista de Banco de dados no servidor", key='-TITLE-')],
-            [sg.Listbox(values=[1,2,3,4], size=(34,6), key='-BD-')],
+            [sg.Listbox(values=list, size=(34,6), key='-BD-')],
             [sg.Button('Pronto', key='-BLF01OK-')]
         ]
 
