@@ -1,4 +1,4 @@
 Usuario: root
 Senha: ''
 Host: localhost
-Banco: 
+Banco: information_schema

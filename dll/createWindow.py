@@ -31,9 +31,8 @@ def createWindow(window, theme='DarkAmber', itensExibicao = None, text = None):
         ]
 
         #Frame 02
-        indexes = telaIni.getIndex()
         layout_frame_registros = [
-            [sg.Listbox(values=indexes, size=(34,6), key='-REGISTRO-')],
+            [sg.Listbox(values=itensExibicao, size=(34,6), key='-REGISTRO-')],
             [sg.Button('Remover', key='-TIF02DL-'), sg.Button('Editar', key='-TIF02UP-'), sg.Button('Visualizar', key='-TIF02SW-'), sg.Button('Pronto', key='-TIF02OK-')]
         ]
 
@@ -105,17 +104,21 @@ def createWindow(window, theme='DarkAmber', itensExibicao = None, text = None):
 
     #Layout da tela de visualização de bancos de dados do servidor
     if window == '-BL-':
-        list = bl.getList();
         layout = [
             [sg.T("Lista de Banco de dados no servidor", key='-TITLE-')],
-            [sg.Listbox(values=list, size=(34,6), key='-BD-')],
-            [sg.Button('Pronto', key='-BLF01OK-')]
+            [sg.Listbox(values=itensExibicao, size=(100,6), key='-BD-')],
+            [sg.Button('Pronto', key='-BLF01UP-')]
         ]
 
         nome = f"Host: {text}"
 
     if window == '-TL-':
-        pass
+        layout = [
+            [sg.T('Lista de Tabelas')],
+            [sg.Listbox(values=itensExibicao, size=(100,18), key='-TL-')],
+            [sg.Button('Pronto', key='-TLF01OK-')]
+        ]
+        nome = f"Host: {text}"
     
     values = main.openWindow(nome, layout)
     if values:

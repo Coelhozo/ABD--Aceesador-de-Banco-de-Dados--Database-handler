@@ -30,48 +30,56 @@ def openWindow(nome, layout):
         if event == sg.WIN_CLOSED:
             break
         
-        #verificação de telas
-        if isTelaInicial.match(event):
-            try:
+        isTI = isTelaInicial.match(event)
+        isBL = isTelaBL.match(event)
 
+        #verificação de telas
+        if isTI:
+            try:
                 argsMissing = telaIni.telaInicial(values, event)
                 if argsMissing:
                     janela.Element('-TITLE-').update(argsMissing, text_color='Red')
             except FileNotFoundError:
-
                 requestTela.request('-ERR-', itens=f"Verifique se entries/index.txt e entries/data/{values['-REGISTRO-'][0]}.txt não foram apagados")
             except FileExistsError:
-
                 requestTela.request('-ERR-', itens=f"O arquivo com o nome {values['-REGISTRO-'][0]} já existe, não crie arquivos manualmente, insira o nome do registro no index")
-            if isOK.match(event) and not argsMissing:
-
+        
+        if isOK.match(event) and not argsMissing:
+            if isTI:
                 bdValues = telaIni.trimValues(values, event)
                 con.writeDBVariables(bdValues)
-                break
+            break
 
-        if isTelaBL.match(event):
+        
+        if isBL:
             argsMissing = bl.BDList(values);
             if argsMissing:
                 janela.Element('-TITLE-').update(argsMissing, text_color='Red')
 
-        if returnsData.match(event):
+        if returnsData.match(event) or isBL:
             janela.close()
             return values
         
         #updates de tela
         #->Update da tela inicial
-        if event != '-TIF01CSVN-' and isTelaInicial.match(event):
+        if event != '-TIF01CSVN-' and isTI:
             indexes = telaIni.getIndex()
             janela['-REGISTRO-'].update(indexes)
 
     janela.close()
 
-    #continua a execução do código
-    if bdValues:
-        tela = '-BL-' if not bdValues['Banco'] else '-TL-'
-        cw.createWindow(tela, theme="Black", text=bdValues['Host'])
+    #caso o banco não for selecionado no momento de registro de credenciais, é inserido neste ponto
+    if bdValues and not bdValues['Banco']:
+        list = bl.getList();
+        bd = cw.createWindow('-BL-', theme="Black", text=bdValues['Host'], itensExibicao=list)
+        bdValues['Banco'] = bd['-BD-'][0]
+        con.writeDBVariables(bdValues)
 
 if __name__ == '__main__':
 
-    cw.createWindow('-TI-')
+    #inicia o programa pela tela inicial
+    cw.createWindow('-TI-', itensExibicao=telaIni.getIndex())
+
+    #inicia/continua o programa pela tela de visualização de tabelas
+    cw.createWindow('-TL-', theme='DarkBrown6', text=con.getDBVariables()['Host'], itensExibicao=[1,2,3,4,5,6,7,8])
         
