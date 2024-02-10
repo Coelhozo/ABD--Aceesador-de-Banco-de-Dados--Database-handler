@@ -1,6 +1,6 @@
-corrigir o erro de importação de createWindow.py
 desenvolver o suporte para acesso sem Senha
 verificar a expressão regular da tela inicial
 implementar checagem de diretório para entries e relacionados pelo __init__ de dll
 criptografia do arquivo de credênciais de banco de dados
 checar, no momento de abrir -TL- se as credenciais de banco estão preenchidas
+rever a utilidade de requestTela.py

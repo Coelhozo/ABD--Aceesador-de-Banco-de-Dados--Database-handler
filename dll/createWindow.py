@@ -1,7 +1,5 @@
-import main
 import PySimpleGUI as sg
-from dll import telaInicial as telaIni
-from dll import BDList as bl
+from dll import openWindow as op
 
 def createWindow(window, theme='DarkAmber', itensExibicao = None, text = None):
     sg.theme(theme)
@@ -120,6 +118,6 @@ def createWindow(window, theme='DarkAmber', itensExibicao = None, text = None):
         ]
         nome = f"Host: {text}"
     
-    values = main.openWindow(nome, layout)
+    values = op.openWindow(nome, layout)
     if values:
         return values
