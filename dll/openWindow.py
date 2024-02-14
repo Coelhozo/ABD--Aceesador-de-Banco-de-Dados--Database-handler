@@ -5,6 +5,7 @@ from dll import telaInicial as telaIni
 from dll import createWindow as cw
 from dll import requestTela
 from dll import BDList as bl
+from dll import TLOption as tl
 
 from dll import connectorDB as con
 
@@ -20,9 +21,10 @@ def openWindow(nome, layout):
 
     #expressões regulares para os tipos gerais de eventos
     isTelaInicial = re.compile(r'-TIF[0-9]{2}\w{2}-')
-    isTelaBL = re.compile(r'-BL\w*')
+    isTelaBL = re.compile(r'-BL\w*-')
     isOK = re.compile(r'-\w*OK-') # de -TIF[0-9]{2}OK- para -\w*OK-
     returnsData = re.compile(r'-.*C(UP)?(SV)?\w-')
+    isTLOption = re.compile(r'-TLOP\w*-')
 
     while True:
         event, values = janela.read()
@@ -50,6 +52,10 @@ def openWindow(nome, layout):
                 con.writeDBVariables(bdValues)
             break
 
+        if isTLOption.match(event):
+            table = event[5:-1]
+            data = tl.getTableData(table)
+            cw.createWindow('-CRUD-', text=table, theme='DarkBlue17', itensExibicao=data)
         
         if isBL:
             argsMissing = bl.BDList(values);
@@ -70,7 +76,7 @@ def openWindow(nome, layout):
 
     #caso o banco não for selecionado no momento de registro de credenciais, é inserido neste ponto
     if bdValues and not bdValues['Banco']:
-        list = bl.getList();
+        list = bl.getList()
         bd = cw.createWindow('-BL-', theme="Black", text=bdValues['Host'], itensExibicao=list)
         bdValues['Banco'] = bd['-BD-'][0]
         con.writeDBVariables(bdValues)

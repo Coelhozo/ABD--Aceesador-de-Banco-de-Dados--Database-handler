@@ -1,4 +1,4 @@
 Usuario: root
 Senha: ''
 Host: localhost
-Banco: performance_schema
+Banco: mysql

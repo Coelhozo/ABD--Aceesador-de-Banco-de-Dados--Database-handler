@@ -112,11 +112,35 @@ def createWindow(window, theme='DarkAmber', itensExibicao = None, text = None):
 
     if window == '-TL-':
         layout = [
-            [sg.T('Lista de Tabelas')],
-            [sg.Listbox(values=itensExibicao, size=(100,18), key='-TL-')],
-            [sg.Button('Pronto', key='-TLF01OK-')]
+            [sg.T('Lista de Tabelas')]
         ]
-        nome = f"Host: {text}"
+        frame = list()
+        for item in itensExibicao:
+            value = itensExibicao[item]
+            description = [
+                [sg.T("Colunas")],
+                [sg.Combo(value, size=(600,6), default_value=value[0])],
+                [sg.Button('Acessar', key=f'-TLOP{item}-')]
+            ]
+
+            frame.append([sg.Frame(item, description, element_justification='left', title_color='white', border_width='1px', size=(600, 100))])
+        layout.append([sg.Column(frame, size=(600,400), scrollable=True, vertical_scroll_only=True)])
+        nome = f"Banco: {text}"
+
+    if window == '-CRUD-':
+        crud = [
+            [sg.Button('Criar')],
+            [sg.Button('Atualizar')],
+            [sg.Button('Deletar')]
+        ]
+        layout = [
+            [sg.Column(crud), 
+             sg.Table(
+                itensExibicao['data'], 
+                headings=itensExibicao['cols']
+            )]
+        ]
+        nome = f'Tabela: {text}'
     
     values = op.openWindow(nome, layout)
     if values:

@@ -8,5 +8,13 @@ if __name__ == '__main__':
     cw.createWindow('-TI-', itensExibicao=ti.getIndex())
 
     #inicia/continua o programa pela tela de visualização de tabelas
-    cw.createWindow('-TL-', theme='DarkBrown6', text=con.getDBVariables()['Host'], itensExibicao=[1,2,3,4,5,6,7,8])
-        
+    result = con.executarQuery("SHOW TABLES")
+    tables = []
+    [tables.append(item[0]) for item in result]
+    describe = {}
+    for table in tables:
+        cols = con.executarQuery(f"Describe {table}")
+        describe[table] = list()
+        [describe[table].append(cols[c][0]) for c in range(len(cols))]
+
+    cw.createWindow('-TL-', theme='DarkBrown6', text=con.getDBVariables()['Banco'], itensExibicao=describe)

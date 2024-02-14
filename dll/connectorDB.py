@@ -3,7 +3,6 @@ from dll import utilidades as utils
 
 def executarQuery(query):
     dbValues = getDBVariables()
-    print(dbValues)
     data = []
     with ms.connect(
         host=dbValues['Host'],
