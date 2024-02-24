@@ -129,9 +129,9 @@ def createWindow(window, theme='DarkAmber', itensExibicao = None, text = None):
 
     if window == '-CRUD-':
         crud = [
-            [sg.Button('Criar')],
-            [sg.Button('Atualizar')],
-            [sg.Button('Deletar')]
+            [sg.Button('Criar', key='-CRUDCSV-')],
+            [sg.Button('Atualizar', key='-CRUDCUP-')],
+            [sg.Button('Deletar', key='-CRUDCDL-')]
         ]
         layout = [
             [sg.Column(crud), 

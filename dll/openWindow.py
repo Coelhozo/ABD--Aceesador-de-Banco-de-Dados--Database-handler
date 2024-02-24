@@ -6,7 +6,6 @@ from dll import createWindow as cw
 from dll import requestTela
 from dll import BDList as bl
 from dll import TLOption as tl
-
 from dll import connectorDB as con
 
 def openWindow(nome, layout):
@@ -23,17 +22,22 @@ def openWindow(nome, layout):
     isTelaInicial = re.compile(r'-TIF[0-9]{2}\w{2}-')
     isTelaBL = re.compile(r'-BL\w*-')
     isOK = re.compile(r'-\w*OK-') # de -TIF[0-9]{2}OK- para -\w*OK-
-    returnsData = re.compile(r'-.*C(UP)?(SV)?\w-')
+    returnsData = re.compile(r'-.*C(UP)?(SV)?\w?-')
     isTLOption = re.compile(r'-TLOP\w*-')
+    #isCRUD = re.compile(r'-CRUD\w*-')
 
     while True:
         event, values = janela.read()
 
         if event == sg.WIN_CLOSED:
             break
-        
+
         isTI = isTelaInicial.match(event)
         isBL = isTelaBL.match(event)
+
+        if returnsData.match(event) or isBL:
+            janela.close()
+            return values
 
         #verificação de telas
         if isTI:
@@ -55,16 +59,13 @@ def openWindow(nome, layout):
         if isTLOption.match(event):
             table = event[5:-1]
             data = tl.getTableData(table)
-            cw.createWindow('-CRUD-', text=table, theme='DarkBlue17', itensExibicao=data)
+            rows = cw.createWindow('-CRUD-', text=table, theme='DarkBlue17', itensExibicao=data)
+            print(data['data'][rows[0][0]])
         
         if isBL:
             argsMissing = bl.BDList(values);
             if argsMissing:
                 janela.Element('-TITLE-').update(argsMissing, text_color='Red')
-
-        if returnsData.match(event) or isBL:
-            janela.close()
-            return values
         
         #updates de tela
         #->Update da tela inicial
