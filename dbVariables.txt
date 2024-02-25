@@ -1,4 +1,4 @@
 Usuario: root
 Senha: ''
 Host: localhost
-Banco: mysql
+Banco: pedro

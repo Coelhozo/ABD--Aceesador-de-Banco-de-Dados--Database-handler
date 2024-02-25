@@ -62,7 +62,7 @@ def openWindow(nome, layout):
             table = event[5:-1]
             data = tl.getTableData(table)
             rows = cw.createWindow('-CRUD-', text=table, theme='DarkBlue17', itensExibicao=data)
-            tl.CRUD(rows[0], data[rows[1][0][0]])
+            tl.CRUD(rows[0], data['data'][rows[1][0][0]])
 
         if isBL:
             argsMissing = bl.BDList(values);

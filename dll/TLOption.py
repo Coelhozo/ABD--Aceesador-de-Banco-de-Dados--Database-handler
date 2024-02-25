@@ -12,7 +12,7 @@ def getTableData(table):
 
 def CRUD(event, data):
     if 'DL' in event:
-        delete()
+        delete(data)
     
     inputData = cw.createWindow('-CRUDCSV+-', theme='Black')
     if 'SV' in event:
@@ -20,7 +20,7 @@ def CRUD(event, data):
     else:
         update()
 
-def delete():
+def delete(data):
     pass
 
 def update():
