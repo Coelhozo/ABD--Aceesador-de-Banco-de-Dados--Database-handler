@@ -24,7 +24,7 @@ def openWindow(nome, layout):
     isOK = re.compile(r'-\w*OK-') # de -TIF[0-9]{2}OK- para -\w*OK-
     returnsData = re.compile(r'-.*C(UP)?(SV)?\w?-')
     isTLOption = re.compile(r'-TLOP\w*-')
-    #isCRUD = re.compile(r'-CRUD\w*-')
+    isCRUD = re.compile(r'-CRUD\w*-')
 
     while True:
         event, values = janela.read()
@@ -37,6 +37,8 @@ def openWindow(nome, layout):
 
         if returnsData.match(event) or isBL:
             janela.close()
+            if 'CRUD' in event:
+                return event, values
             return values
 
         #verificação de telas
@@ -60,8 +62,8 @@ def openWindow(nome, layout):
             table = event[5:-1]
             data = tl.getTableData(table)
             rows = cw.createWindow('-CRUD-', text=table, theme='DarkBlue17', itensExibicao=data)
-            print(data['data'][rows[0][0]])
-        
+            tl.CRUD(rows[0], data[rows[1][0][0]])
+
         if isBL:
             argsMissing = bl.BDList(values);
             if argsMissing:

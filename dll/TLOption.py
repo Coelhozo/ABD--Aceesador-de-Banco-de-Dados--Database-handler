@@ -1,4 +1,5 @@
 from dll import connectorDB as con
+from dll import createWindow as cw
 
 def getTableData(table):
     #lista das colunas - headings -
@@ -8,3 +9,22 @@ def getTableData(table):
     
     result = con.executarQuery(f"select * from {table}")
     return {'cols': colunas, 'data': result}
+
+def CRUD(event, data):
+    if 'DL' in event:
+        delete()
+    
+    inputData = cw.createWindow('-CRUDCSV+-', theme='Black')
+    if 'SV' in event:
+        create()
+    else:
+        update()
+
+def delete():
+    pass
+
+def update():
+    pass
+
+def create():
+    pass
